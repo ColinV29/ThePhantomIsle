@@ -118,6 +118,6 @@ public class CharacterMovement : MonoBehaviour
                 break;
             default: break;
         }
-        Debug.Log(facing + " " + playerAnimator.GetInteger("facing"));
+        // Debug.Log(facing + " " + playerAnimator.GetInteger("facing"));
     }
 }
