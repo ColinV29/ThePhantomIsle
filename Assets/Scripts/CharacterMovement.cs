@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] private float playerSpeed = 5;
+    [SerializeField] private int hp = 5;
 
     private CharacterController controller;
 
@@ -62,7 +63,7 @@ public class CharacterMovement : MonoBehaviour
     //Apply Movement
     void HandleMovement()
     {
-        Vector3 move = new Vector3(movement.x, movement.y, 0);
+        Vector3 move = new Vector3(movement.x, 0, movement.y);
         controller.Move(move * Time.deltaTime * playerSpeed); 
     }
 
@@ -71,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
     {
         //get mouse location
         Ray ray = Camera.main.ScreenPointToRay(aim);
-        Plane groundPlane = new Plane(Vector3.forward, Vector3.zero);
+        Plane groundPlane = new Plane(Vector3.right, Vector3.zero, Vector3.forward);
         float rayDistance;
         Vector3 point;
 
@@ -82,7 +83,7 @@ public class CharacterMovement : MonoBehaviour
             point.x = point.x - gameObject.transform.position.x;
             point.y = point.y - gameObject.transform.position.y;
             //updating the facing value based on the magnitude and direction of the mouse in relation to the player
-            if (Mathf.Abs(point.x) > Mathf.Abs(point.y))
+            if (Mathf.Abs(point.x) > Mathf.Abs(point.z))
             {
                 if (point.x >= 0) {
                     facing = Direction.Right;
@@ -93,7 +94,7 @@ public class CharacterMovement : MonoBehaviour
             }
             else
             {
-                if (point.y >= 0) {
+                if (point.z >= 0) {
                     facing = Direction.Up;
                 }
                 else {
@@ -118,6 +119,22 @@ public class CharacterMovement : MonoBehaviour
                 break;
             default: break;
         }
-        // Debug.Log(facing + " " + playerAnimator.GetInteger("facing"));
+        //Debug.Log(facing + " " + playerAnimator.GetInteger("facing"));
+    }
+
+    //HP Functions
+    public int getPlayerHP(){
+        return hp;
+    }
+    public void setPlayerHP(int newhp){
+        hp = newhp;
+        return;
+    }
+    public void damagePlayer(int damage){
+        hp -= damage;
+
+        if (hp <= 0) {
+            Application.Quit();
+        }
     }
 }
