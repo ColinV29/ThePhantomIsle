@@ -122,6 +122,15 @@ public class CharacterMovement : MonoBehaviour
         //Debug.Log(facing + " " + playerAnimator.GetInteger("facing"));
     }
 
+    public float getPlayerSpeed()
+    {
+        return playerSpeed;
+    }
+    public Vector2 getPlayerCurrentMovement()
+    {
+        return movement;
+    }
+
     //HP Functions
     public int getPlayerHP(){
         return hp;
